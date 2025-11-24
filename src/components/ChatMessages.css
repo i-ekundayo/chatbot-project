@@ -1,0 +1,13 @@
+.chat-message-container {
+  flex-grow: 1;
+  margin-top: 20px;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.welcome-text {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
