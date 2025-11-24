@@ -11,7 +11,8 @@ function App() {
     Chatbot.addResponses({
       'Alright, take care': "Take good care of yourself",
       "Goodbye": "You too, Goodbye",
-      "I love you": "I love you too"
+      "I love you": "I love you too",
+      "I love Oluwatomiwa": "Oluwatomiwa loves you too"
     });
 
     localStorage.setItem('messages', JSON.stringify(chatMessages));
