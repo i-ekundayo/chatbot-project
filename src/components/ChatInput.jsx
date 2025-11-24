@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Chatbot } from "supersimpledev";
+import dayjs from "dayjs";
 import LoadingSpinner from "../assets/loading-spinner.gif";
-import './ChatInput.css';
+import "./ChatInput.css";
 
 export function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState("");
@@ -17,11 +18,15 @@ export function ChatInput({ chatMessages, setChatMessages }) {
     }
     setIsLoading(true);
 
+    const senderTime = dayjs().valueOf();
+    const formattedSenderTime = dayjs(senderTime).format("h:mma");
+
     const newChatMessages = [
       ...chatMessages,
       {
         message: inputText,
         sender: "user",
+        time: formattedSenderTime,
         id: crypto.randomUUID(),
       },
     ];
@@ -39,11 +44,15 @@ export function ChatInput({ chatMessages, setChatMessages }) {
 
     const response = await Chatbot.getResponseAsync(inputText);
 
+    const responseTime = dayjs().valueOf();
+    const formattedResponseTime = dayjs(responseTime).format("h:mma");
+
     setChatMessages([
       ...newChatMessages,
       {
         message: response,
         sender: "robot",
+        time: formattedResponseTime,
         id: crypto.randomUUID(),
       },
     ]);
@@ -57,6 +66,11 @@ export function ChatInput({ chatMessages, setChatMessages }) {
     if (event.key === "Esc" || event.key === "Escape") {
       setInputText("");
     }
+  }
+
+  function clearMessage() {
+    setChatMessages([]);
+    // localStorage.setItem("messages", JSON.stringify(chatMessages));
   }
 
   // setIsLoading(false);
@@ -73,6 +87,9 @@ export function ChatInput({ chatMessages, setChatMessages }) {
       />
       <button onClick={sendMessage} className="send-button">
         Send
+      </button>
+      <button onClick={clearMessage} className="clear-button">
+        Clear
       </button>
     </div>
   );
